@@ -1,0 +1,238 @@
+openapi: 3.0.2
+servers:
+  - url: /api/v1
+info:
+  version: 1.0.0
+  title: Transactions
+tags:
+  - name: Transactions
+paths:
+  /transactions:
+    get:
+      tags: [ "Transactions" ]
+      description: Search transactions
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - INGRESS
+              - EGRESS
+              - ALL
+        - in: query
+          name: account_id
+          schema:
+            type: string
+        - in: query
+          name: state
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/TransactionState"
+        - in: query
+          name: date_from
+          schema:
+            type: string
+        - in: query
+          name: date_to
+          schema:
+            type: string
+        - in: query
+          name: currency
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Currency"
+        - in: query
+          name: limit
+          schema:
+            type: number
+        - in: query
+          name: skip
+          schema:
+            type: number
+        - in: query
+          name: order_by
+          schema:
+            type: string
+            enum:
+              - amount
+              - created_at
+        - in: query
+          name: order_dir
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                  - count
+                  - skip
+                  - limit
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Transaction"
+                  count:
+                    type: number
+                  skip:
+                    type: number
+                  limit:
+                    type: number
+        default:
+          description: default Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /transactions/{transaction_id}:
+    put:
+      tags: ["Transactions"]
+      description: Create new Transaction
+      parameters:
+        - in: path
+          name: transaction_id
+          required: true
+          description: identify uuid from Transaction
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - from_account_id
+                - to_account_id
+                - amount
+                - currency
+              properties:
+                from_account_id:
+                  type: string
+                to_account_id:
+                  type: string
+                amount:
+                  type: number
+                currency:
+                  $ref: "#/components/schemas/Currency"
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - ok
+                properties:
+                  ok:
+                    type: boolean
+        default:
+          description: default Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags: [ "Transactions" ]
+      description: Get transaction with id
+      parameters:
+        - in: path
+          name: transaction_id
+          required: true
+          description: identify uuid from Transaction
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+        default:
+          description: default Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      description: Represents error object
+      type: object
+      required:
+        - status
+        - code
+      properties:
+        status:
+          type: integer
+        code:
+          type: string
+        description:
+          type: string
+    TransactionState:
+      description: Transaction state
+      type: string
+      enum:
+        - PENDING
+        - COMPLETED
+        - REJECTED
+    Currency:
+      description: Currency to create Transaction
+      type: string
+      enum:
+        - ARS
+        - USD
+    Transaction:
+      description: Transaction Extended Model
+      type: object
+      required:
+        - id
+        - state
+        - from
+        - to
+        - amount
+        - currency
+        - created_at
+      properties:
+        id:
+          type: string
+        state:
+          $ref: "#/components/schemas/TransactionState"
+        from:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        to:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        amount:
+          type: number
+        currency:
+          $ref: "#/components/schemas/Currency"
+        created_at:
+          type: string

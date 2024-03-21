@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+  bank-accounts-backend:
+    image: bank-accounts-backend
+    container_name: bank-accounts-backend
+    build:
+      context: ./backend-accounts
+      dockerfile: ./Dockerfile
+    env_file:
+      - path: ./backend-accounts/docker.env
+        required: true
+    depends_on:
+      - bank-mongo
+      - bank-rabbitmq
+      - bank-nginx
+    restart: always
+    networks:
+      - bank-network
+
+  bank-transactions-backend:
+    image: bank-transactions-backend
+    container_name: bank-transactions-backend
+    build:
+      context: ./backend-transactions
+      dockerfile: ./Dockerfile
+    env_file:
+      - path: ./backend-transactions/docker.env
+        required: true
+    depends_on:
+      - bank-mongo
+      - bank-rabbitmq
+      - bank-nginx
+    restart: always
+    networks:
+      - bank-network
+
+  bank-nginx:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    restart: always
+    networks:
+      - bank-network
+
+  bank-rabbitmq:
+    image: rabbitmq:management
+    container_name: bank-rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=bank
+      - RABBITMQ_DEFAULT_PASS=bank
+    volumes:
+      - ./storage/rabbitmq:/var/lib/rabbitmq
+    restart: always
+    networks:
+      - bank-network
+
+  bank-mongo:
+    image: mongo:latest
+    container_name: bank-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=bank
+      - MONGO_INITDB_ROOT_PASSWORD=bank
+    volumes:
+      - ./storage/mongo:/data/db
+    restart: always
+    networks:
+      - bank-network
+
+networks:
+  bank-network:
