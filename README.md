@@ -7,6 +7,10 @@
 - **golang**: lenguaje con el que se desarrollo el servicio de transacciones
 - **python**: lenguaje con el que se desarrollo el servicio de cuentas
 
+## Como iniciar:
+-   ir a la raiz del proyecto
+-   ejecutar: `docker compose up -d --build`
+
 ## Flujo:
 - Se crea una cuenta en el servicio de cuentas en el endpoint `PUT /accounts/:account_id`
     -   parametros:
