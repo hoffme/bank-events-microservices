@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "239f8b91-f903-4ef0-a18a-9b68f277a497",
+		"name": "Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8057703"
+	},
+	"item": [
+		{
+			"name": "Get Transaction by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/transactions/:transaction_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"transactions",
+						":transaction_id"
+					],
+					"variable": [
+						{
+							"key": "transaction_id",
+							"value": "<string>",
+							"description": "(Required) identify uuid from Transaction"
+						}
+					]
+				},
+				"description": "Get transaction with id"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/transactions/:transaction_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions",
+								":transaction_id"
+							],
+							"variable": [
+								{
+									"key": "transaction_id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"id\": \"<string>\",\n  \"state\": \"PENDING\",\n  \"from\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"to\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"amount\": \"<number>\",\n  \"currency\": \"USD\",\n  \"created_at\": \"<string>\"\n}"
+				},
+				{
+					"name": "default Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/transactions/:transaction_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions",
+								":transaction_id"
+							],
+							"variable": [
+								{
+									"key": "transaction_id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"description\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Set Transaction by Id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"from_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a2\",\n  \"to_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a2\",\n  \"amount\": 10,\n  \"currency\": \"ARS\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/transactions/:transaction_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"transactions",
+						":transaction_id"
+					],
+					"variable": [
+						{
+							"key": "transaction_id",
+							"value": "12bfaa25-361c-410b-9022-84f3371bf231",
+							"description": "(Required) identify uuid from Transaction"
+						}
+					]
+				},
+				"description": "Create new Transaction"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"from_account_id\": \"<string>\",\n  \"to_account_id\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"currency\": \"ARS\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions/:transaction_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions",
+								":transaction_id"
+							],
+							"variable": [
+								{
+									"key": "transaction_id"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"ok\": \"<boolean>\"\n}"
+				},
+				{
+					"name": "default Error",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"from_account_id\": \"<string>\",\n  \"to_account_id\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"currency\": \"ARS\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions/:transaction_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions",
+								":transaction_id"
+							],
+							"variable": [
+								{
+									"key": "transaction_id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"description\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Search Transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/transactions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "EGRESS",
+							"disabled": true
+						},
+						{
+							"key": "account_id",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "PENDING",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "PENDING",
+							"disabled": true
+						},
+						{
+							"key": "date_from",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "date_to",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "currency",
+							"value": "ARS",
+							"disabled": true
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "<number>",
+							"disabled": true
+						},
+						{
+							"key": "skip",
+							"value": "<number>",
+							"disabled": true
+						},
+						{
+							"key": "order_by",
+							"value": "amount",
+							"disabled": true
+						},
+						{
+							"key": "order_dir",
+							"value": "asc",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Search transactions"
+			},
+			"response": [
+				{
+					"name": "Success response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/transactions?type=EGRESS&account_id=<string>&state=PENDING&date_from=<string>&date_to=<string>&currency=USD&limit=<number>&skip=<number>&order_by=amount&order_dir=asc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "EGRESS"
+								},
+								{
+									"key": "account_id",
+									"value": "<string>"
+								},
+								{
+									"key": "state",
+									"value": "PENDING"
+								},
+								{
+									"key": "date_from",
+									"value": "<string>"
+								},
+								{
+									"key": "date_to",
+									"value": "<string>"
+								},
+								{
+									"key": "currency",
+									"value": "USD"
+								},
+								{
+									"key": "limit",
+									"value": "<number>"
+								},
+								{
+									"key": "skip",
+									"value": "<number>"
+								},
+								{
+									"key": "order_by",
+									"value": "amount"
+								},
+								{
+									"key": "order_dir",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"state\": \"COMPLETED\",\n      \"from\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"to\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"amount\": \"<number>\",\n      \"currency\": \"ARS\",\n      \"created_at\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"state\": \"PENDING\",\n      \"from\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"to\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"amount\": \"<number>\",\n      \"currency\": \"ARS\",\n      \"created_at\": \"<string>\"\n    }\n  ],\n  \"count\": \"<number>\",\n  \"skip\": \"<number>\",\n  \"limit\": \"<number>\"\n}"
+				},
+				{
+					"name": "default Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/transactions?type=EGRESS&account_id=<string>&state=PENDING&date_from=<string>&date_to=<string>&currency=USD&limit=<number>&skip=<number>&order_by=amount&order_dir=asc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "EGRESS"
+								},
+								{
+									"key": "account_id",
+									"value": "<string>"
+								},
+								{
+									"key": "state",
+									"value": "PENDING"
+								},
+								{
+									"key": "date_from",
+									"value": "<string>"
+								},
+								{
+									"key": "date_to",
+									"value": "<string>"
+								},
+								{
+									"key": "currency",
+									"value": "USD"
+								},
+								{
+									"key": "limit",
+									"value": "<number>"
+								},
+								{
+									"key": "skip",
+									"value": "<number>"
+								},
+								{
+									"key": "order_by",
+									"value": "amount"
+								},
+								{
+									"key": "order_dir",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"description\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Search Accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/accounts",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/accounts/:account_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accounts",
+						":account_id"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "ea836d7a-af5c-466a-8907-83d0a01922a1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Account by Id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cuenta 20\",\n    \"currency\": \"RS\",\n    \"balance\": 20000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/accounts/:account_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accounts",
+						":account_id"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "ea836d7a-af5c-466a-8907-83d0a01922a5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost/api/v1"
+		}
+	]
+}
