@@ -1,4 +1,4 @@
-# Modelado de Banco con microservicios origietados a eventos
+# Modelado de Banco con microservicios orientados a eventos
 
 ## Teconologias
 - **nginx**: proxy inverso como router y entrada principal
