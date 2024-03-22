@@ -1,6 +1,22 @@
 version: "3.9"
 
 services:
+  bank-nginx:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    restart: always
+    depends_on:
+      - bank-accounts-backend
+      - bank-transactions-backend
+    networks:
+      - bank-network
+
   bank-accounts-backend:
     image: bank-accounts-backend
     container_name: bank-accounts-backend
@@ -13,7 +29,6 @@ services:
     depends_on:
       - bank-mongo
       - bank-rabbitmq
-      - bank-nginx
     restart: always
     networks:
       - bank-network
@@ -30,20 +45,6 @@ services:
     depends_on:
       - bank-mongo
       - bank-rabbitmq
-      - bank-nginx
-    restart: always
-    networks:
-      - bank-network
-
-  bank-nginx:
-    image: nginx
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "80:80"
-    environment:
-      - NGINX_HOST=foobar.com
-      - NGINX_PORT=80
     restart: always
     networks:
       - bank-network
@@ -62,6 +63,11 @@ services:
     restart: always
     networks:
       - bank-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://bank:bank@localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   bank-mongo:
     image: mongo:latest
