@@ -130,7 +130,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"from_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a2\",\n  \"to_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a2\",\n  \"amount\": 10,\n  \"currency\": \"ARS\"\n}",
+					"raw": "{\n  \"from_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a1\",\n  \"to_account_id\": \"ea836d7a-af5c-466a-8907-83d0a01922a2\",\n  \"amount\": 500,\n  \"currency\": \"ARS\"\n}",
 					"options": {
 						"raw": {
 							"headerFamily": "json",
@@ -325,7 +325,7 @@
 						},
 						{
 							"key": "limit",
-							"value": "<number>",
+							"value": "10",
 							"disabled": true
 						},
 						{
@@ -504,12 +504,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/accounts",
+					"raw": "{{baseUrl}}/accounts?limit=10",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"accounts"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
 					]
 				}
 			},
@@ -532,7 +538,7 @@
 					"variable": [
 						{
 							"key": "account_id",
-							"value": "ea836d7a-af5c-466a-8907-83d0a01922a1"
+							"value": "ea836d7a-af5c-466a-8907-83d0a01922a5"
 						}
 					]
 				}
@@ -540,13 +546,13 @@
 			"response": []
 		},
 		{
-			"name": "Set Account by Id",
+			"name": "Upsert Account by Id",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Cuenta 20\",\n    \"currency\": \"RS\",\n    \"balance\": 20000\n}",
+					"raw": "{\n    \"name\": \"Cuenta 10\",\n    \"currency\": \"ARS\",\n    \"balance\": 20000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -561,6 +567,56 @@
 					"path": [
 						"accounts",
 						":account_id"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "ea836d7a-af5c-466a-8907-83d0a01922a2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Activate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/accounts/:account_id/activate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accounts",
+						":account_id",
+						"activate"
+					],
+					"variable": [
+						{
+							"key": "account_id",
+							"value": "ea836d7a-af5c-466a-8907-83d0a01922a1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Inactivate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/accounts/:account_id/inactivate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accounts",
+						":account_id",
+						"inactivate"
 					],
 					"variable": [
 						{
@@ -593,12 +649,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost/api/v1"
 		}
 	]
 }

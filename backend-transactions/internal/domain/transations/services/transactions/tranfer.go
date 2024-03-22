@@ -26,7 +26,10 @@ func (s Service) Transfer(ctx context.Context, paramsRaw TransferParamsRaw) erro
 		return err
 	}
 	if accountFrom.IsInactive() {
-		return ErrorTransferAccountFrom
+		return ErrorTransferAccountFromInactive
+	}
+	if !accountFrom.HasFounds(params.Amount.Raw()) {
+		return ErrorTransferAccountFromInsufficientsFound
 	}
 
 	accountTo, err := s.accountsRepository.Get(ctx, params.ToAccountID.Raw())
@@ -34,7 +37,7 @@ func (s Service) Transfer(ctx context.Context, paramsRaw TransferParamsRaw) erro
 		return err
 	}
 	if accountTo.IsInactive() {
-		return ErrorTransferAccountTo
+		return ErrorTransferAccountToInactive
 	}
 
 	result, err := transaction.Create(

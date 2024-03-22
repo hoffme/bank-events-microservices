@@ -1,5 +1,8 @@
 # Modelado de Banco con microservicios orientados a eventos
 
+## Endpoints
+- [Postman](/docs/Bank.postman_collection.json)
+
 ## Teconologias
 - **nginx**: proxy inverso como router y entrada principal
 - **mongodb**: base de datos no-sql, misma instancia pero diferentes bbdd por microservicio
@@ -10,6 +13,30 @@
 ## Como iniciar:
 -   ir a la raiz del proyecto
 -   ejecutar: `docker compose up -d --build`
+
+## Modelado
+- servicio backend-accounts:
+    - **descripcion**:
+        administracion de las cuentas
+    - **acciones**
+        - obtener todas las cuentas filtrando
+        - obtener una cuenta con uuid
+        - crear una cuenta con uuid, nombre, moneda y balance incial
+        - modificar el nombre de la cuenta
+        - desactivar una cuenta
+        - activar una cuenta
+    - **eventos**
+        - actualiza los balances de las cuentas cuando se realiza una transaccion
+- servicio backend-transacions:
+    - **descripcion**:
+        administrar las transacciones de las cuentas 
+    - **acciones**
+        - crear una transaccion
+        - autorizar una transaccion mediante una cola
+        - mantiene los balances de las cuentas correlacionados con las transacciones operadas
+    - **eventos**
+        - escucha cuando se crea o modifica una cuenta en el servicio de cuentas y la crea o modifica en la base de datos local
+        - cuando se crea una transaccion se pone pendiente hasta que la cola de autorizacion la complete o rechaze, ahi se realiza el movimiento de balances en las cuentas
 
 ## Flujo:
 - Se crea una cuenta en el servicio de cuentas en el endpoint `PUT /accounts/:account_id`

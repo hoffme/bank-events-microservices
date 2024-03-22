@@ -10,4 +10,9 @@ class Queues:
 
     def subscribe(self):
         self.ctx.event_bus.subscribe(ResolverAccountBalanceModify(self.ctx))
-        pass
+
+    def run(self):
+        self.ctx.event_bus.consume()
+
+    def close(self):
+        self.ctx.event_bus.close()

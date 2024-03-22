@@ -11,6 +11,8 @@ class ResolverAccountBalanceModify(EventResolver):
         self.ctx = ctx
 
     def resolve(self, event: Event):
+        print(self.id, "resolve", event)
+
         account = self.ctx.account_repository.find(event.payload["id"])
         if account is None:
             return

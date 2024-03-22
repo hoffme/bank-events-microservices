@@ -9,7 +9,7 @@ class Event:
         return Event(
             topic=raw["header"]["topic"],
             id=raw["header"]["id"],
-            timestamp=datetime.fromisoformat(raw["header"]["timestamp"]),
+            timestamp=datetime.fromisoformat(raw["header"]["timestamp"][:-4]),
             payload=json.loads(base64.b64decode(raw["payload"]))
         )
 

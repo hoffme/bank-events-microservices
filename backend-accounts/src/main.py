@@ -15,7 +15,7 @@ api = Api(config, ctx)
 queues = Queues(ctx=ctx)
 
 if __name__ == '__main__':
-    ctx.event_bus.consume()
+    queues.run()
     api.run()
-    ctx.event_bus.close()
+    queues.close()
     

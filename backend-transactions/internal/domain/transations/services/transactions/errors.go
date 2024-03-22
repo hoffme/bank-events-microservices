@@ -8,6 +8,8 @@ var ErrorAmountNotPositive = errors.New("TRANSACTIONS:TRANSFER:AMOUNT:NOT_POSITI
 
 var ErrorTransferCreated = errors.New("TRANSACTIONS:TRANSFER:CREATED")
 
-var ErrorTransferAccountFrom = errors.New("TRANSACTIONS:TRANSFER:ACCOUNT_FROM")
+var ErrorTransferAccountFromInsufficientsFound = errors.New("TRANSACTIONS:TRANSFER:ACCOUNT_FROM:INSSUFICIENTS_FOUNDS")
 
-var ErrorTransferAccountTo = errors.New("TRANSACTIONS:TRANSFER:ACCOUNT_TO")
+var ErrorTransferAccountFromInactive = errors.New("TRANSACTIONS:TRANSFER:ACCOUNT_FROM:INACTIVE")
+
+var ErrorTransferAccountToInactive = errors.New("TRANSACTIONS:TRANSFER:ACCOUNT_TO:INACTIVE")
